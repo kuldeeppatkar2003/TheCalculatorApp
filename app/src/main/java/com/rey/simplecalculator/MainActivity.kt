@@ -1,14 +1,14 @@
 package com.rey.simplecalculator
 
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-
-
-
 
 class MainActivity : AppCompatActivity() {
     // create nullables variable
@@ -21,10 +21,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         tvInput = findViewById(R.id.tvInput)
-
     }
+
+    fun vibratePhone() {
+        val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(30)
+        }
+    }
+
     // whenever onDigit called, view will be the number
     fun onDigit(view: View){
         // tvInput? : if null, it will not append
@@ -33,17 +41,20 @@ class MainActivity : AppCompatActivity() {
         // flags for decimal dot
         lastNumeric = true
         lastDot = false
+        vibratePhone()
     }
 
     // clear function
     fun onClear(view: View){
         tvInput?.text = ""
+        vibratePhone()
     }
 
     fun onBack(view: View){
         val back = tvInput?.text.toString()
         if(back.isNotEmpty())
             tvInput?.text = back.substring(0, back.length - 1)
+        vibratePhone()
     }
 
     // if dot already there, it will not add another dot
@@ -55,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             lastNumeric = false
             lastDot = true
         }
+        vibratePhone()
     }
 
     fun onOperator(view: View){
@@ -68,8 +80,7 @@ class MainActivity : AppCompatActivity() {
                 lastDot = false
             }
         }
-
-
+        vibratePhone()
     }
 
     fun onEqual(view: View){
@@ -156,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 }
             }
+        vibratePhone()
         }
 
     private fun removeZeroAfterDot(result: String) : String{
@@ -164,13 +176,6 @@ class MainActivity : AppCompatActivity() {
             // 90.0 to 90               removes ".0" (-2)
             value = result.substring(0, result.length -2)
         return value
-    }
-
-    private fun backSpace(): String{
-        val back = tvInput.toString()
-        if(back.isNotEmpty())
-            back.substring(0, back.length -1)
-        return back
     }
 
     private fun isOperatorAdded(value: String) : Boolean{
