@@ -1,5 +1,6 @@
-# Simple-Calculator-Kotlin
-Simple calculator.
+# TheCalculator App
+Kotlin Calculator is an simple calculator that performs various complex calculations with ease. This app is made in Kotlin on top of Android Platform. Fork, learn and use it for your projects.
 
-This app created during the ['The Complete Android 12 & Kotlin Development Masterclass'](https://www.udemy.com/course/android-kotlin-developer/) by Denis Panjuta [Tutorials.eu](https://tutorials.eu/)
 
+
+![Screenshot 2024-07-11 225401](https://github.com/user-attachments/assets/cc593be4-75bf-48cc-93b0-426dc9f7c86c)
